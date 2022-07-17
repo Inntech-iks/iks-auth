@@ -51,7 +51,8 @@ public class AuthService {
 
 /*
  * Get all users with pagable
- * 
+ * Param: int page: query at page number
+ * Param: int pageSize: number of records in a page.
  */
         public List<UserDTO> getUsers(int page, int pageSize)  {
         	Page<User> users = userService.getUsers(page, pageSize);
