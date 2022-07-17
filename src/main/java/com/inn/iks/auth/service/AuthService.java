@@ -53,6 +53,7 @@ public class AuthService {
  * Get all users with pagable
  * Param: int page: query at page number
  * Param: int pageSize: number of records in a page.
+ * Return: return list of UserDTO
  */
         public List<UserDTO> getUsers(int page, int pageSize)  {
         	Page<User> users = userService.getUsers(page, pageSize);
@@ -60,7 +61,9 @@ public class AuthService {
         }    
 /*
  * Get user by username
- * 
+ * Param String username: username is used to find user
+ * Return: user has name match with specified username.
+ * Exception: throw exception if user is not found in DB 
  */
     public UserDTO getUser(String username) throws AuthServiceException {
     	User user = userService.getByUsername(username);
