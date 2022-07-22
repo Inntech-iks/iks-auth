@@ -40,13 +40,20 @@ public class AuthService {
         this.userService = userService;
         this.modelMapper = modelMapper;
     }
-
+/*
+ * Initiate administrator if it doesn't existing in system
+ */
     @PostConstruct
     private void createUsers() {
-//    	User user = userService.getById(1);
-//    	if (user == null ) {
-//        	userService.save(new User(1,"dunglt", BCrypt.hashpw("dunglt@123", BCrypt.gensalt()), "dunglt@gmail.com", false, false,Lists.newArrayList(new Role(1,"DSA","Nhân viên bán hàng"))));
-//    	}
+    	User user = userService.getByUsername("administrator");
+    	if (user == null ) {
+    		Role role = roleService.getByName("IT_ADMIN");
+    		if (role == null) {
+    			role = new Role("IT_ADMIN","Nhân viên quản trị hệ thống");
+    		}
+        	userService.save(new User(1,"administrator", BCrypt.hashpw("administrator", BCrypt.gensalt()), "administrator@gmail.com", false, false,
+        						Lists.newArrayList(role)));
+    	}
     }
 
 /*

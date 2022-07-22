@@ -11,11 +11,15 @@
 	<groupId>com.inn</groupId>
 	<artifactId>iks-auth</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>iks-auth</name>
 	<description>Authentication server for IKS project</description>
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2021.0.3</spring-cloud.version>
+		<docker.image.prefix>iks-auth</docker.image.prefix>
+		<project.build.finalName>iks-auth</project.build.finalName>
+		<project.version>0.0.1-SNAPSHOT</project.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -72,7 +76,16 @@
 		    <groupId>org.modelmapper</groupId>
 		    <artifactId>modelmapper</artifactId>
 		    <version>2.3.5</version>
-		</dependency>	
+		</dependency>
+ 		
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.cloud</groupId>
+		    <artifactId>spring-cloud-starter-bootstrap</artifactId>
+		</dependency>					
 <!--             
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -103,6 +116,28 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+	        <plugin>
+	            <groupId>com.spotify</groupId>
+	            <artifactId>dockerfile-maven-plugin</artifactId>
+	            <version>1.4.12</version>
+	            <executions>
+	                <execution>
+	                    <id>default</id>
+	                    <goals>
+	                        <goal>build</goal>
+	                        <goal>push</goal>
+	                    </goals>
+	                </execution>
+	            </executions>
+	 
+	            <configuration>
+	                <repository>${docker.image.prefix}/iks-auth</repository>
+	                <tag>${project.version}</tag>
+	                <buildArgs>
+	                    <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+	                </buildArgs>
+	            </configuration>
+	        </plugin>			
 		</plugins>
 	</build>
 

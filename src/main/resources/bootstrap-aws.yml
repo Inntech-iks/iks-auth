@@ -1,5 +1,6 @@
 spring:
   cloud:
     config:
-      enabled: true
       uri: http://localhost:8762
+  application:
+    name: auth-service
